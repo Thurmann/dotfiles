@@ -82,10 +82,22 @@ oh_my_zsh() {
     fi
 }
 
-init
-link
-install_tools
-compile_exports
-set_zsh
-oh_my_zsh
-link
+if [ "$1" = "init" ]; then
+    init
+elif [ "$1" = "symlink" ]; then
+    link
+elif [ "$1" = "exports" ]; then
+    compile_exports
+elif [ "$1" = "tools" ]; then
+    install_tools
+elif [ "$1" = "all" ]; then
+    init
+    link
+    install_tools
+    compile_exports
+    set_zsh
+    oh_my_zsh
+    link
+else
+    echo "Usage: $0 {all|init|symlink|exports|tools}"
+fi

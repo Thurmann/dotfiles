@@ -1,4 +1,5 @@
 target
+.config/fish/completions
 .classpath
 .project
 .settings
