@@ -6,7 +6,7 @@ source ~/.functions
 source ~/.aliases
 
 # Default to Java 11 
-java11
+java17
 
 # z support
-. /usr/local/etc/profile.d/z.sh
+. /opt/homebrew/etc/profile.d/z.sh

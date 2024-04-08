@@ -1,4 +1,5 @@
 # Aliases
+alias lazyvimpath="cd /Users/thurmann/.local/share/nvim/lazy/LazyVim" 
 
 # Maven
 alias mvnit="mvn clean install -Dintegration-test=true"

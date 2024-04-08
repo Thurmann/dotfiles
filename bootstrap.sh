@@ -3,101 +3,114 @@
 BLUE='\033[0;36m'
 NC='\033[0m'
 
-init () {
-    echo "${BLUE}Initializing workspace${NC}"
-    mkdir -pv ${HOME}/workspace
-    echo "${BLUE}Initilizing jetty dir${NC}"
-    sh jetty/jetty-init.sh
+init() {
+	echo "${BLUE}Initializing workspace${NC}"
+	mkdir -pv ${HOME}/workspace
+	echo "${BLUE}Initilizing jetty dir${NC}"
+	sh jetty/jetty-init.sh
 }
 
-link () {
-    echo "${BLUE}Initializing symlinks${NC}"
-    echo "Proceed? (y/n)"
-    read resp
-    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        mkdir -pv "${HOME}/.config"
-        mkdir -pv "${HOME}/.config/fish"
-        ln -svf "$PWD/.aliases" "$HOME"
-        ln -svf "$PWD/.bash_profile" "$HOME"
-        ln -svf "$PWD/.exports" "$HOME"
-        ln -svf "$PWD/.functions" "$HOME"
-        ln -svf "$PWD/.vimrc" "$HOME"
-        ln -svf "$PWD/.zshenv" "$HOME"
-        ln -svf "$PWD/.zshrc" "$HOME"
-        ln -svf "$PWD/.aliases" "$HOME"
-        ln -svf "$PWD/.config/fish/config.fish" "$HOME/.config/fish/config.fish"
-        ln -svf "$PWD/.config/fish/alias.fish" "$HOME/.config/fish/alias.fish"
-        ln -svf "$PWD/.config/fish/export.fish" "$HOME/.config/fish/export.fish"
-        ln -svf "$PWD/.config/fish/completions" "$HOME/.config/fish/completions"
-        ln -svf "$PWD/.config/starship.toml" "$HOME/.config/starship.toml"
-        echo "Symlinking complete"
-    else
-        echo "Symlinking cancelled"
-        return 1
-    fi
+nvim() {
+	echo "${BLUE}Initializing LazyVim${NC}"
+	echo "Proceed? (y/n)"
+	read resp
+	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
+		mkdir -pv "${HOME}/.config"
+		mkdir -pv "${HOME}/.config/nvim"
+		echo "Symlinking complete"
+	else
+		echo "Symlinking cancelled"
+		return 1
+	fi
+}
+link() {
+	echo "${BLUE}Initializing symlinks${NC}"
+	echo "Proceed? (y/n)"
+	read resp
+	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
+		mkdir -pv "${HOME}/.config"
+		mkdir -pv "${HOME}/.config/fish"
+		ln -svf "$PWD/.aliases" "$HOME"
+		ln -svf "$PWD/.bash_profile" "$HOME"
+		ln -svf "$PWD/.exports" "$HOME"
+		ln -svf "$PWD/.functions" "$HOME"
+		ln -svf "$PWD/.vimrc" "$HOME"
+		ln -svf "$PWD/.zshenv" "$HOME"
+		ln -svf "$PWD/.zshrc" "$HOME"
+		ln -svf "$PWD/.aliases" "$HOME"
+		ln -svf "$PWD/.config/fish/config.fish" "$HOME/.config/fish/config.fish"
+		ln -svf "$PWD/.config/fish/alias.fish" "$HOME/.config/fish/alias.fish"
+		ln -svf "$PWD/.config/fish/export.fish" "$HOME/.config/fish/export.fish"
+		ln -svf "$PWD/.config/fish/completions" "$HOME/.config/fish/completions"
+		ln -svf "$PWD/.config/starship.toml" "$HOME/.config/starship.toml"
+		echo "Symlinking complete"
+	else
+		echo "Symlinking cancelled"
+		return 1
+	fi
 }
 
-install_tools () {
-    if [ $( echo "$OSTYPE" | grep 'darwin' ) ] ; then
-        echo "${BLUE}Initializing homebrew${NC}"
-        echo "Proceed? (y/n)"
-        read resp
-        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using brew. This may take a while..."
-            sh brew-install.sh
-        else
-            echo "Brew installation cancelled by user"
-        fi
-    else
-        echo "Skipping installations using Homebrew because MacOS was not detected..."
-    fi
+install_tools() {
+	if [ $(echo "$OSTYPE" | grep 'darwin') ]; then
+		echo "${BLUE}Initializing homebrew${NC}"
+		echo "Proceed? (y/n)"
+		read resp
+		if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
+			echo "Installing useful stuff using brew. This may take a while..."
+			sh brew-install.sh
+		else
+			echo "Brew installation cancelled by user"
+		fi
+	else
+		echo "Skipping installations using Homebrew because MacOS was not detected..."
+	fi
 }
 
-compile_exports () {
-    echo "${BLUE}Setting compiled exports${NC}"
-    sh compiled-exports.sh
+compile_exports() {
+	echo "${BLUE}Setting compiled exports${NC}"
+	sh compiled-exports.sh
 }
 
-set_zsh () {
-    echo "${BLUE}Set ZSH to default?${NC} (y/n)"
-    read resp
-    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        echo "setting shell to zsh"
-        chsh -s /usr/local/bin/zsh
-    else
-        echo "skipping chsh"
-    fi
+set_zsh() {
+	echo "${BLUE}Set ZSH to default?${NC} (y/n)"
+	read resp
+	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
+		echo "setting shell to zsh"
+		chsh -s /usr/local/bin/zsh
+	else
+		echo "skipping chsh"
+	fi
 }
 
 oh_my_zsh() {
-    echo "${BLUE}Install oh my zsh?${NC} (y/n)"
-    read resp
-    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        echo "installing oh my zsh"
-        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-          ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    else
-        echo "skipping oh my zsh"
-    fi
+	echo "${BLUE}Install oh my zsh?${NC} (y/n)"
+	read resp
+	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
+		echo "installing oh my zsh"
+		sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+			${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+	else
+		echo "skipping oh my zsh"
+	fi
 }
 
 if [ "$1" = "init" ]; then
-    init
+	init
 elif [ "$1" = "symlink" ]; then
-    link
+	link
 elif [ "$1" = "exports" ]; then
-    compile_exports
+	compile_exports
 elif [ "$1" = "tools" ]; then
-    install_tools
+	install_tools
 elif [ "$1" = "all" ]; then
-    init
-    link
-    install_tools
-    compile_exports
-    set_zsh
-    oh_my_zsh
-    link
+	init
+	link
+	install_tools
+	compile_exports
+	set_zsh
+	oh_my_zsh
+	link
 else
-    echo "Usage: $0 {all|init|symlink|exports|tools}"
+	echo "Usage: $0 {all|init|symlink|exports|tools}"
 fi

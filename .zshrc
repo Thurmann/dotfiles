@@ -77,6 +77,7 @@ plugins=(
     kubectl
     kube-ps1
     zsh-syntax-highlighting
+    zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -108,6 +109,11 @@ export LANG=en_US.UTF-8
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
+eval "$(starship init zsh)"
 
-export PATH=/Users/et31464/Library/Python/3.9/bin:$PATH
+export PATH=/Users/thurmann/Library/Python/3.9/bin:$PATH
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
