@@ -90,6 +90,8 @@ oh_my_zsh() {
 		sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 			${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+		git clone https://github.com/zsh-users/zsh-autosuggestions \
+			${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 	else
 		echo "skipping oh my zsh"
 	fi
@@ -105,7 +107,6 @@ elif [ "$1" = "tools" ]; then
 	install_tools
 elif [ "$1" = "all" ]; then
 	init
-	link
 	install_tools
 	compile_exports
 	set_zsh
