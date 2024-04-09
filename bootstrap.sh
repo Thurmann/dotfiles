@@ -11,18 +11,33 @@ init() {
 }
 
 nvim() {
-	echo "${BLUE}Initializing LazyVim${NC}"
+	echo "${BLUE}Configuring LazyVim${NC}"
 	echo "Proceed? (y/n)"
 	read resp
-	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
-		mkdir -pv "${HOME}/.config"
-		mkdir -pv "${HOME}/.config/nvim"
-		echo "Symlinking complete"
+	if [ "$resp" = 'y' ] || [ "$resp" = 'Y' ]; then
+		local dotfiles_dir="${HOME}/workspace/dotfiles"
+		local config_dir="${HOME}/.config"
+		local nvim_dir="${config_dir}/nvim"
+		if [ -d "$nvim_dir" ]; then
+			# Rename .config/nvim directory to nvim.{current_timestamp}.bak
+			mv "$nvim_dir" "${config_dir}/nvim.$(date +'%Y%m%d%H%M%S').bak"
+		else
+			mkdir -pv "$config_dir"
+			mkdir -pv "$nvim_dir"
+		fi
+		if [ -d "$dotfiles_dir/nvim" ]; then
+			cp -R "$dotfiles_dir/nvim" "$nvim_dir"
+			echo "LazyVim config installed"
+		else
+			echo "Error: LazyVim config directory not found in '$dotfiles_dir/nvim'. Installation failed."
+			return 1
+		fi
 	else
-		echo "Symlinking cancelled"
+		echo "LazyVim config cancelled"
 		return 1
 	fi
 }
+
 link() {
 	echo "${BLUE}Initializing symlinks${NC}"
 	echo "Proceed? (y/n)"
@@ -105,13 +120,16 @@ elif [ "$1" = "exports" ]; then
 	compile_exports
 elif [ "$1" = "tools" ]; then
 	install_tools
+elif [ "$1" = "nvim" ]; then
+	nvim
 elif [ "$1" = "all" ]; then
 	init
 	install_tools
 	compile_exports
 	set_zsh
 	oh_my_zsh
+	nvim
 	link
 else
-	echo "Usage: $0 {all|init|symlink|exports|tools}"
+	echo "Usage: $0 {all|init|symlink|exports|tools|nvim}"
 fi
