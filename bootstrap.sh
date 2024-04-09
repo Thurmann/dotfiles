@@ -15,7 +15,8 @@ nvim() {
 	echo "Proceed? (y/n)"
 	read resp
 	if [ "$resp" = 'y' ] || [ "$resp" = 'Y' ]; then
-		local dotfiles_dir="${HOME}/workspace/dotfiles"
+		local script_dir="$(cd "$(dirname "$0")" && pwd)"
+		local dotfiles_dir="${script_dir}/../dotfiles"
 		local config_dir="${HOME}/.config"
 		local nvim_dir="${config_dir}/nvim"
 		if [ -d "$nvim_dir" ]; then
