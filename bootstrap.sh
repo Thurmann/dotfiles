@@ -51,6 +51,7 @@ link() {
 		ln -svf "$PWD/.exports" "$HOME"
 		ln -svf "$PWD/.functions" "$HOME"
 		ln -svf "$PWD/.vimrc" "$HOME"
+		ln -svf "$PWD/.ideavimrc" "$HOME"
 		ln -svf "$PWD/.zshenv" "$HOME"
 		ln -svf "$PWD/.zshrc" "$HOME"
 		ln -svf "$PWD/.aliases" "$HOME"
