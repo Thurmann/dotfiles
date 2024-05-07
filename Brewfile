@@ -34,7 +34,9 @@ brew 'fish'
 brew 'starship'
 brew 'kubernetes-cli'
 brew 'postgrest'
-breq 'sdkman'
+brew 'sdkman'
+brew 'lazygit'
+brew 'ripgrep'
 
 # Casks
 cask 'docker'
@@ -49,8 +51,3 @@ cask 'atom'
 cask 'visual-studio-code'
 
 # Temurin Java
-cask 'temurin'
-cask 'temurin8'
-cask 'temurin11'
-cask 'temurin17'
-cask 'temurin21'

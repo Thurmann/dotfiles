@@ -74,14 +74,11 @@ plugins=(
     git
     docker
     docker-compose
-    kubectl
-    kube-ps1
     zsh-syntax-highlighting
     zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
-PROMPT=$PROMPT'$(kube_ps1)'$'\n'"$ "
 
 # User configuration
 
@@ -109,9 +106,13 @@ export LANG=en_US.UTF-8
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#eval $(thefuck --alias)
+eval $(thefuck --alias)
 eval "$(starship init zsh)"
 
+unset PAGER
+unset LESS
+
+PATH="/Users/christian/.vdi-tools/bin:$PATH"
 export PATH=/Users/thurmann/Library/Python/3.9/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
