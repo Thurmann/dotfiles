@@ -9,13 +9,10 @@ alias mvnitp="mvn clean install -Dpackaging=true -Dintegration-test=true"
 alias mvnd="mvn clean install -DskipTests && ./deploy.sh"
 alias mvnf='mvn install -DskipTests -pl \!$(find *schemas -maxdepth 0)'
 
-# Java
-alias java8='export JAVA_HOME=$JAVA_8_HOME'
-alias java8oracle='export JAVA_HOME=$JAVA_8_HOME_ORACLE'
-alias java11='export JAVA_HOME=$JAVA_11_HOME'
-alias java12='export JAVA_HOME=$JAVA_12_HOME'
-alias java17='export JAVA_HOME=$JAVA_17_HOME'
-alias java21='export JAVA_HOME=$JAVA_21_HOME'
+# Java#
+alias java11='sdk use java "$(sdk list java | grep "installed" | grep "11" | awk "{print \$NF; exit}")"'
+alias java17='sdk use java "$(sdk list java | grep "installed" | grep "17" | awk "{print \$NF; exit}")"'
+alias java21='sdk use java "$(sdk list java | grep "installed" | grep "21" | awk "{print \$NF; exit}")"'
 
 # Docker
 alias docker-compose-dev='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml'
