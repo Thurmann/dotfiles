@@ -20,11 +20,3 @@ alias dcd='docker-compose-dev'
 alias dcdup='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml up -d'
 alias dcddo='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml down -d'
 
-# Emoji-aliases
-alias 🍊='git push'
-alias 👻='git pull'
-alias 🦉='git add .'
-alias 🍰='git commit -m '
-
-# Exa
-alias e='exa --icons --git -laTL 1'
