@@ -108,6 +108,7 @@ export LANG=en_US.UTF-8
 
 eval $(thefuck --alias)
 eval "$(starship init zsh)"
+eval "$(fzf --zsh)"
 
 unset PAGER
 unset LESS
