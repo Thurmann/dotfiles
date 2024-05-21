@@ -1,6 +1,7 @@
 # Aliases
 alias lazyvimpath="cd ~/.local/share/nvim/lazy/LazyVim" 
 alias lgit="lazygit"
+alias lsa="ls -all"
 
 # Maven
 alias mvnit="mvn clean install -Dintegration-test=true"
@@ -13,6 +14,7 @@ alias mvnf='mvn install -DskipTests -pl \!$(find *schemas -maxdepth 0)'
 alias java11='sdk use java "$(sdk list java | grep "installed" | grep "11" | awk "{print \$NF; exit}")"'
 alias java17='sdk use java "$(sdk list java | grep "installed" | grep "17" | awk "{print \$NF; exit}")"'
 alias java21='sdk use java "$(sdk list java | grep "installed" | grep "21" | awk "{print \$NF; exit}")"'
+alias javas='sdk list java | grep "installed"'
 
 # Docker
 alias docker-compose-dev='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml'

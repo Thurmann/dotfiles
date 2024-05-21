@@ -3,10 +3,12 @@
 export WORKSPACE="/Users/christian/workspace"
 
 #SPK
-export SPK_DATA="/Users/christian/spkdata/"
-export SPK_LOG="/Users/christian/spklog/"
+export SPK_ROOT="/Users/christian/spk"
+export SPK_CONFIG_ROOT="/Users/christian/spk/spkconfig"
+export SPK_DATA="/Users/christian/spk/spkdata/"
+export SPK_LOG="/Users/christian/spk/spklog/"
 
- #Java
+#Java
 
 # Logstash
 export LOGSTASH_DESTINATION=alt-aot-g-fou01.fe.cosng.net:4560

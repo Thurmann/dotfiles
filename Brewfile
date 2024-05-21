@@ -37,6 +37,8 @@ brew 'postgrest'
 brew 'sdkman'
 brew 'lazygit'
 brew 'ripgrep'
+brew 'git-flow-avh'
+brew 'fzf'
 
 # Casks
 cask 'docker'
