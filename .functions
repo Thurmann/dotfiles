@@ -1,7 +1,18 @@
 sdk-list() {
   if [ "$1" = "java" ]; then
-    sdk list "$1" | grep "installed" | awk '$NF ~ /^[0-9]/ {print $NF}'
+    sdk list "$1" | grep "installed\|local only" | awk '$NF ~ /^[0-9]/ {print $NF}'
   else
     sdk list "$1" | grep -E '^\s*[*>]' | awk '$NF ~ /^[0-9]/ {print $NF}'
   fi
+}
+
+search() {
+    # Check if an argument is provided
+    if [ $# -eq 0 ]; then
+        echo "Usage: search_text_in_files \"pattern_to_find\""
+        return 1
+    fi
+
+    # Search for the specified pattern using fzf and grep
+    fzf --preview 'cat {}' < <(grep -r "$1" .)
 }
