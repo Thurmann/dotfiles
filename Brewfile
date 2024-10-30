@@ -39,6 +39,7 @@ brew 'lazygit'
 brew 'ripgrep'
 brew 'git-flow-avh'
 brew 'fzf'
+brew 'ssh-agent'
 
 # Casks
 cask 'docker'

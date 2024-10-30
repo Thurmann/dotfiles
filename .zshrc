@@ -76,6 +76,7 @@ plugins=(
     docker-compose
     zsh-syntax-highlighting
     zsh-autosuggestions
+    ssh-agent
 )
 
 source $ZSH/oh-my-zsh.sh
