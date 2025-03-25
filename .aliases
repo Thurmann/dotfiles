@@ -22,6 +22,7 @@ alias javas='sdk list java | grep "installed\|local only"'
 # Docker
 alias docker-compose-dev='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml'
 alias dcd='docker-compose-dev'
+alias dps='docker ps'
 alias dcdup='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml up -d'
 alias dcddo='docker compose -f ~/workspace/ace-docker-compose-dev/docker-compose.yml down -d'
 

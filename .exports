@@ -13,6 +13,3 @@ export SPK_LOG="/Users/christian/spk/spklog/"
 #Go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-
-# Logstash
-export LOGSTASH_DESTINATION=alt-aot-g-fou01.fe.cosng.net:4560
