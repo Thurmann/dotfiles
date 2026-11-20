@@ -52,3 +52,31 @@ search() {
         --bind="esc:clear-query+hide-input+rebind($keys)" |
         cut -d: -f1,2
 }
+
+# Replace the current iTerm2 window with a new one from the "coding" arrangement
+# (see the itc alias). The new window opens first, then the old window's panes
+# close one at a time: closing the whole window asks to confirm closing multiple
+# sessions. This shell's pane goes last, since closing it ends this function.
+itr() {
+    local it2=/Applications/iTerm.app/Contents/Resources/utilities/it2
+    local me window session
+    if [ -z "$ITERM_SESSION_ID" ]; then
+        echo "itr: not running inside iTerm2"
+        return 1
+    fi
+
+    me=${ITERM_SESSION_ID#*:}
+    window=$("$it2" session list --format '\(id) \(tab.window.id)' |
+        awk -v id="$me" '$1 == id {print $2}')
+    if [ -z "$window" ]; then
+        echo "itr: could not find this iTerm2 window"
+        return 1
+    fi
+
+    "$it2" window arrange restore coding || return 1
+    for session in $("$it2" session list --format '\(id) \(tab.window.id)' |
+        awk -v window="$window" -v me="$me" '$2 == window && $1 != me {print $1}'); do
+        "$it2" session close --session "$session" --force
+    done
+    "$it2" session close --session "$me" --force
+}
