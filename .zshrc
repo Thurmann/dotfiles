@@ -115,7 +115,10 @@ unset PAGER
 unset LESS
 
 PATH="/Users/christian/.vdi-tools/bin:$PATH"
-export PATH=/Users/thurmann/Library/Python/3.9/bin:$PATH
+export CLOUDSDK_PYTHON="/opt/homebrew/opt/python@3.12/libexec/bin/python3"
+
+# Start Codex with GPT-6-Luna, medium reasoning, and full permissions.
+alias cdx='codex --model gpt-6-luna -c model_reasoning_effort="medium" --dangerously-bypass-approvals-and-sandbox'
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
