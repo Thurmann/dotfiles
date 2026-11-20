@@ -1,6 +1,6 @@
 # Exports
 
-export WORKSPACE="/Users/christian/workspace"
+export WORKSPACE="/Users/thurmann/workspace"
 
 #SPK
 export SPK_ROOT="/Users/christian/spk"
