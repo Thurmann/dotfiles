@@ -39,6 +39,18 @@ nvim() {
 	fi
 }
 
+# Symlink $1 to $2, backing up an existing file or directory that is not a symlink
+link_file() {
+	if [ ! -e "$1" ]; then
+		echo "Skipping $2: $1 does not exist"
+		return
+	fi
+	if [ -e "$2" ] && [ ! -L "$2" ]; then
+		mv -v "$2" "$2.$(date +'%Y%m%d%H%M%S').bak"
+	fi
+	ln -svfn "$1" "$2"
+}
+
 link() {
 	echo "${BLUE}Initializing symlinks${NC}"
 	echo "Proceed? (y/n)"
@@ -46,20 +58,20 @@ link() {
 	if [ "$resp" = 'y' -o "$resp" = 'Y' ]; then
 		mkdir -pv "${HOME}/.config"
 		mkdir -pv "${HOME}/.config/fish"
-		ln -svf "$PWD/.aliases" "$HOME"
-		ln -svf "$PWD/.bash_profile" "$HOME"
-		ln -svf "$PWD/.exports" "$HOME"
-		ln -svf "$PWD/.functions" "$HOME"
-		ln -svf "$PWD/.vimrc" "$HOME"
-		ln -svf "$PWD/.ideavimrc" "$HOME"
-		ln -svf "$PWD/.zshenv" "$HOME"
-		ln -svf "$PWD/.zshrc" "$HOME"
-		ln -svf "$PWD/.aliases" "$HOME"
-		ln -svf "$PWD/.config/fish/config.fish" "$HOME/.config/fish/config.fish"
-		ln -svf "$PWD/.config/fish/alias.fish" "$HOME/.config/fish/alias.fish"
-		ln -svf "$PWD/.config/fish/export.fish" "$HOME/.config/fish/export.fish"
-		ln -svf "$PWD/.config/fish/completions" "$HOME/.config/fish/completions"
-		ln -svf "$PWD/.config/starship.toml" "$HOME/.config/starship.toml"
+		link_file "$PWD/.aliases" "$HOME/.aliases"
+		link_file "$PWD/.bash_profile" "$HOME/.bash_profile"
+		link_file "$PWD/.exports" "$HOME/.exports"
+		link_file "$PWD/.functions" "$HOME/.functions"
+		link_file "$PWD/.vimrc" "$HOME/.vimrc"
+		link_file "$PWD/.ideavimrc" "$HOME/.ideavimrc"
+		link_file "$PWD/.zprofile" "$HOME/.zprofile"
+		link_file "$PWD/.zshenv" "$HOME/.zshenv"
+		link_file "$PWD/.zshrc" "$HOME/.zshrc"
+		link_file "$PWD/.config/fish/config.fish" "$HOME/.config/fish/config.fish"
+		link_file "$PWD/.config/fish/alias.fish" "$HOME/.config/fish/alias.fish"
+		link_file "$PWD/.config/fish/export.fish" "$HOME/.config/fish/export.fish"
+		link_file "$PWD/.config/fish/completions" "$HOME/.config/fish/completions"
+		link_file "$PWD/.config/starship.toml" "$HOME/.config/starship.toml"
 		echo "Symlinking complete"
 	else
 		echo "Symlinking cancelled"
