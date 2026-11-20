@@ -2,6 +2,7 @@
 alias lazyvimpath="cd ~/.local/share/nvim/lazy/LazyVim" 
 alias lgit="lazygit"
 alias lsa="ls -all"
+alias ft="search" # find text recursively, see search in .functions
 
 # Maven
 alias mvnc="mvn clean install"

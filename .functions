@@ -6,13 +6,49 @@ sdk-list() {
   fi
 }
 
+# Recursively search file contents and list matches as path:line:text,
+# with paths relative to the current directory.
+# Up to 10 matches are printed directly. More open in a 10-row list driven by
+# vim keys: j/k, g/G, ctrl-d/ctrl-u, / to filter (ctrl-j/ctrl-k move while
+# filtering, esc clears it), tab to mark, enter to print the marked path:line
+# entries, q or ctrl-c to quit.
+# Usage: search [rg options] <pattern> [path...]
 search() {
-    # Check if an argument is provided
     if [ $# -eq 0 ]; then
-        echo "Usage: search_text_in_files \"pattern_to_find\""
+        echo "Usage: search [rg options] <pattern> [path...]"
         return 1
     fi
 
-    # Search for the specified pattern using fzf and grep
-    fzf --preview 'cat {}' < <(grep -r "$1" .)
+    local matches plain count files summary keys
+    if command -v rg >/dev/null 2>&1; then
+        matches=$(rg --line-number --no-heading --smart-case --hidden --glob '!.git' --sort path --color=always "$@" </dev/null)
+    else
+        matches=$(grep -rnI "$@" . | sed 's|^\./||')
+    fi
+    if [ -z "$matches" ]; then
+        echo "No matches"
+        return 1
+    fi
+
+    plain=$(printf '%s\n' "$matches" | sed $'s/\x1b\\[[0-9;]*[mK]//g')
+    count=$(printf '%s\n' "$plain" | wc -l | tr -d ' ')
+    files=$(printf '%s\n' "$plain" | cut -d: -f1 | sort -u | wc -l | tr -d ' ')
+    summary="$count matches in $files files"
+
+    if [ ! -t 1 ]; then
+        printf '%s\n' "$plain"
+        return 0
+    fi
+    if [ "$count" -le 10 ] || ! command -v fzf >/dev/null 2>&1; then
+        printf '%s\n%s\n' "$matches" "$summary"
+        return 0
+    fi
+
+    keys='j,k,g,G,q,/'
+    printf '%s\n' "$matches" | fzf --ansi --multi --exact --no-sort --no-input --layout=reverse --height=11 \
+        --header="$summary | j/k g/G ^d/^u  / filter  esc unfilter  tab mark  enter print  q quit" \
+        --bind="j:down,k:up,g:first,G:last,ctrl-d:half-page-down,ctrl-u:half-page-up,q:abort" \
+        --bind="/:show-input+unbind($keys)" \
+        --bind="esc:clear-query+hide-input+rebind($keys)" |
+        cut -d: -f1,2
 }
